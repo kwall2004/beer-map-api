@@ -13,7 +13,7 @@ namespace BeerMapApi.Infrastructure.Repositories
 
         public BreweryRepository()
         {
-            var client = new MongoClient("mongodb://heroku_k8m8kp5m:i1iqd9246vjvb3m53mnmkbft6l@ds255005.mlab.com:55005/heroku_k8m8kp5m");
+            var client = new MongoClient(System.Environment.GetEnvironmentVariable("MONGODB_URI"));
             var database = client.GetDatabase("heroku_k8m8kp5m");
 
             _breweries = database.GetCollection<Brewery>("brewery");
