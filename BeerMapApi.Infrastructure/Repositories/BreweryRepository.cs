@@ -24,7 +24,9 @@ namespace BeerMapApi.Infrastructure.Repositories
             return (await _breweries.FindAsync(b => true)).ToEnumerable().Select(e => new Core.Models.Brewery
             {
                 Id = e.Id,
-                Name = e.Name
+                Name = e.Name,
+                Latitude = e.Latitude,
+                Longitude = e.Longitude
             });
         }
     }

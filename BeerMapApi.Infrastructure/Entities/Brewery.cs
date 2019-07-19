@@ -11,5 +11,9 @@ namespace BeerMapApi.Infrastructure.Entities
         public string Id { get; set; }
         [BsonElement("name")]
         public string Name { get; set; }
+        [BsonElement("latitude")]
+        public decimal Latitude { get; set; }
+        [BsonElement("longitude")]
+        public decimal Longitude { get; set; }
     }
 }
