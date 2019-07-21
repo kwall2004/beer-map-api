@@ -25,8 +25,11 @@ namespace BeerMapApi.Infrastructure.Repositories
             {
                 Id = e.Id,
                 Name = e.Name,
-                Latitude = e.Latitude,
-                Longitude = e.Longitude
+                Street = e.Street,
+                City = e.City,
+                State = e.State,
+                PostalCode = e.PostalCode,
+                Country = e.Country
             });
         }
     }
