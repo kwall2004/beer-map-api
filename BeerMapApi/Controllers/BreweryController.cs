@@ -17,9 +17,16 @@ namespace BeerMapApi.Controllers
             _useCase = useCase;
         }
 
+        [HttpGet]
         public async Task<IEnumerable<Brewery>> Read()
         {
             return await _useCase.Read();
+        }
+
+        [HttpPatch]
+        public async Task<Brewery> Update(Brewery model)
+        {
+            return await _useCase.Update();
         }
     }
 }

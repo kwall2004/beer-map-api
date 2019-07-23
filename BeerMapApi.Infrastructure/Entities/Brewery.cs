@@ -21,5 +21,9 @@ namespace BeerMapApi.Infrastructure.Entities
         public string PostalCode { get; set; }
         [BsonElement("country")]
         public string Country { get; set; }
+        [BsonElement("latitude")]
+        public string Latitude { get; set; }
+        [BsonElement("longitude")]
+        public string Longitude { get; set; }
     }
 }

@@ -18,5 +18,10 @@ namespace BeerMapApi.Core.UseCases
         {
             return await _repository.ReadAsync();
         }
+
+        public async Task<Brewery> Update()
+        {
+            return await _repository.Update();
+        }
     }
 }

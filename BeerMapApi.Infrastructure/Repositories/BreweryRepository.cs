@@ -21,16 +21,34 @@ namespace BeerMapApi.Infrastructure.Repositories
 
         public async Task<IEnumerable<Core.Models.Brewery>> ReadAsync()
         {
-            return (await _breweries.FindAsync(b => true)).ToEnumerable().Select(e => new Core.Models.Brewery
+            return (await _breweries.FindAsync(b => true)).ToEnumerable().Select(b => new Core.Models.Brewery
             {
-                Id = e.Id,
-                Name = e.Name,
-                Street = e.Street,
-                City = e.City,
-                State = e.State,
-                PostalCode = e.PostalCode,
-                Country = e.Country
+                Id = b.Id,
+                Name = b.Name,
+                Street = b.Street,
+                City = b.City,
+                State = b.State,
+                PostalCode = b.PostalCode,
+                Country = b.Country
             });
+        }
+
+        public async Task<Core.Models.Brewery> UpdateAsync(Core.Models.Brewery model)
+        {
+            var result = await _breweries.FindOneAndUpdateAsync(b => b.Id == model.Id, Builders<Brewery>.Update
+                .Set(b => b.Latitude, model.Latitude)
+                .Set(b => b.Longitude, model.Longitude));
+
+            return new Core.Models.Brewery
+            {
+                Id = result.Id,
+                Name = result.Name,
+                Street = result.Street,
+                City = result.City,
+                State = result.State,
+                PostalCode = result.PostalCode,
+                Country = result.Country
+            };
         }
     }
 }
