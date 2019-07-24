@@ -9,35 +9,58 @@ namespace BeerMapApi.Infrastructure.Repositories
 {
     public class BreweryRepository : IRepository<Core.Models.Brewery>
     {
-        private readonly IMongoCollection<Brewery> _breweries;
+        private readonly IMongoCollection<Brewery> _collection;
 
         public BreweryRepository()
         {
             var client = new MongoClient(System.Environment.GetEnvironmentVariable("MONGODB_URI"));
             var database = client.GetDatabase("heroku_k8m8kp5m");
 
-            _breweries = database.GetCollection<Brewery>("brewery");
+            _collection = database.GetCollection<Brewery>("brewery");
+        }
+
+        public async Task<Core.Models.Brewery> CreateAsync(Core.Models.Brewery model)
+        {
+            var document = new Brewery
+            {
+                Name = model.Name,
+                Street = model.Street,
+                City = model.City,
+                State = model.State,
+                PostalCode = model.PostalCode,
+                Country = model.Country,
+                Latitude = model.Latitude,
+                Longitude = model.Longitude
+            };
+
+            await _collection.InsertOneAsync(document);
+
+            model.Id = document.Id;
+
+            return model;
         }
 
         public async Task<IEnumerable<Core.Models.Brewery>> ReadAsync()
         {
-            return (await _breweries.FindAsync(b => true)).ToEnumerable().Select(b => new Core.Models.Brewery
+            return (await _collection.FindAsync(b => true)).ToEnumerable().Select(d => new Core.Models.Brewery
             {
-                Id = b.Id,
-                Name = b.Name,
-                Street = b.Street,
-                City = b.City,
-                State = b.State,
-                PostalCode = b.PostalCode,
-                Country = b.Country
+                Id = d.Id,
+                Name = d.Name,
+                Street = d.Street,
+                City = d.City,
+                State = d.State,
+                PostalCode = d.PostalCode,
+                Country = d.Country,
+                Latitude = d.Latitude,
+                Longitude = d.Longitude
             });
         }
 
         public async Task<Core.Models.Brewery> UpdateAsync(Core.Models.Brewery model)
         {
-            var result = await _breweries.FindOneAndUpdateAsync(b => b.Id == model.Id, Builders<Brewery>.Update
-                .Set(b => b.Latitude, model.Latitude)
-                .Set(b => b.Longitude, model.Longitude));
+            var result = await _collection.FindOneAndUpdateAsync(d => d.Id == model.Id, Builders<Brewery>.Update
+                .Set(d => d.Latitude, model.Latitude)
+                .Set(d => d.Longitude, model.Longitude));
 
             return new Core.Models.Brewery
             {
@@ -47,7 +70,9 @@ namespace BeerMapApi.Infrastructure.Repositories
                 City = result.City,
                 State = result.State,
                 PostalCode = result.PostalCode,
-                Country = result.Country
+                Country = result.Country,
+                Latitude = result.Latitude,
+                Longitude = result.Longitude
             };
         }
     }

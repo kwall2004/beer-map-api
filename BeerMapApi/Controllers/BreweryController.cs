@@ -17,6 +17,12 @@ namespace BeerMapApi.Controllers
             _useCase = useCase;
         }
 
+        [HttpPost]
+        public async Task<Brewery> Create(Brewery model)
+        {
+            return await _useCase.Create(model);
+        }
+
         [HttpGet]
         public async Task<IEnumerable<Brewery>> Read()
         {
@@ -26,7 +32,7 @@ namespace BeerMapApi.Controllers
         [HttpPatch]
         public async Task<Brewery> Update(Brewery model)
         {
-            return await _useCase.Update();
+            return await _useCase.Update(model);
         }
     }
 }

@@ -5,7 +5,8 @@ namespace BeerMapApi.Core.Interfaces
 {
     public interface IUseCase<TEntity>
     {
+        Task<TEntity> Create(TEntity model);
         Task<IEnumerable<TEntity>> Read();
-        Task<TEntity> Update();
+        Task<TEntity> Update(TEntity model);
     }
 }
