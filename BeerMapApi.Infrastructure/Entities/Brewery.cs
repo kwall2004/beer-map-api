@@ -17,7 +17,7 @@ namespace BeerMapApi.Infrastructure.Entities
         public string City { get; set; }
         [BsonElement("state")]
         public string State { get; set; }
-        [BsonElement("postal_code")]
+        [BsonElement("postalCode")]
         public string PostalCode { get; set; }
         [BsonElement("country")]
         public string Country { get; set; }
